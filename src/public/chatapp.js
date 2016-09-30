@@ -10,7 +10,7 @@ class ChatApp extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.socket = io('http://localhost:3000', {query:`user=${this.props.user}`});
+		this.socket = io('http://10.199.248.107:3000', {query:`user=${this.props.user}`});
 		this.state = {
 			userList : [],
 			roomList: []
