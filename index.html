@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+    <div style="height:200px;width:200px;">
+      <ul id="messages"></ul>
+      <form id="myForm" action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+      </form>
+    </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+     <script>
+
+      function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          name = name.replace(/[\[\]]/g, "\\$&");
+          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+              results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+      var user = getParameterByName('user');
+      console.log(user);
+      var socket = io();
+      socket.on('message', function (data) {
+        console.log(data);
+      });
+
+      socket.emit('subscribe', 'roomOne');
+      socket.emit('subscribe', 'roomTwo');
+
+      document.getElementById('myForm').onsubmit = function(){
+        socket.emit('chat message', document.getElementById('m').value);
+        document.getElementById('m').value = '';
+        socket.emit('send', { room: 'roomOne', message: "roomOne" });
+        socket.emit('send', { room: 'roomTwo', message: "roomTwo" });
+        return false;
+      };
+
+      socket.on('message', function(msg){
+        let message = document.createElement("li");
+        message.innerHTML = msg;
+        document.getElementById('messages').appendChild(message);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "name": "ccapi-ui",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node src/server.js",
+    "debug": "node-debug src/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "es6-promise": "^3.1.2",
+    "exports-loader": "^0.6.3",
+    "express": "^4.13.4",
+    "imports-loader": "^0.6.5",
+    "ioredis": "^2.2.0",
+    "material-ui": "^0.15.4",
+    "mongo-uuid-helper": "0.0.1",
+    "mongodb": "2.1.16",
+    "redis": "^2.6.2",
+    "request": "^2.72.0",
+    "socket.io": "^1.4.8",
+    "whatwg-fetch": "^0.11.0"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.0.0",
+    "babel-eslint": "^5.0.0-beta6",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-transform-object-rest-spread": "^6.3.13",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "classnames": "^2.2.3",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "gulp": "^3.9.1",
+    "node-sass": "^3.4.2",
+    "null-loader": "^0.1.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.13.0"
+  }
+}
