@@ -34,7 +34,7 @@ function roomAlreadyExists(privateRooms, users) {
 		console.log('users', users);
 		if((room.users[0] === users[0] || room.users[0] === users[1]) &&
 			(room.users[1] === users[0] || room.users[1] === users[1])) {
-			roomExist = true;
+			roomExist = room;
 		}
 	});
 
@@ -70,17 +70,18 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('privatechat', function(users) {
-		if(!roomAlreadyExists(privateRooms, users)) {
+		var roomExists = roomAlreadyExists(privateRooms, users);
+		if(!roomExists) {
 			var chatParticipants = allClients.filter((obj) => {
 				return obj.user === users[0] || obj.user === users[1];
 			});
 			var newRoom = Math.random();
 			var privateRoomObject = {
-				users: []
+				users: users,
+				room: newRoom
 			};
 			chatParticipants.forEach((client) => {
-				client.socket.emit('newChat', newRoom);
-				privateRoomObject.users.push(client.user);
+				client.socket.emit('newChat', privateRoomObject);
 			});
 			privateRooms.push(privateRoomObject);
 		} else {

@@ -44,9 +44,9 @@ class ChatRoom extends React.Component {
 			);
 		});
 		return (
-			<div className="col-md-6">
+			<div className="col-md-6" style={{ paddingTop: '10px' }}>
 				<Card>
-					<CardTitle title={this.props.roomName} />
+					<CardTitle title={this.props.title} />
 					<CardText>
 						{chatText}
 					</CardText>

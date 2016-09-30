@@ -11,6 +11,7 @@ class ChatApp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.socket = io('http://10.199.248.107:3000', {query:`user=${this.props.user}`});
+		// this.socket = io('http://localhost:3000', {query:`user=${this.props.user}`});
 		this.state = {
 			userList : [],
 			roomList: []
@@ -23,13 +24,15 @@ class ChatApp extends React.Component {
 			});
 		});
 
-		this.socket.on('newChat', (chatRoom) => {
+		this.socket.on('newChat', (chatRoomObj) => {
 			// this.refs.newChat.appendChild(
 			// 	<ChatRoom roomName={chatRoom} socket={this.socket} user={this.props.user} />
 			// );
+			console.log(chatRoomObj);
+			let roomTitle = `Chat between ${chatRoomObj.users[0]} and ${chatRoomObj.users[1]}`;
 			this.setState({
 				roomList : this.state.roomList.concat([
-					<ChatRoom key={Math.random()} roomName={chatRoom} socket={this.socket} user={this.props.user} />
+					<ChatRoom key={Math.random()} roomName={chatRoomObj.room} title={roomTitle} socket={this.socket} user={this.props.user} />
 				])
 			});
 		});
@@ -52,7 +55,7 @@ class ChatApp extends React.Component {
 						title="Chat!" />
 					<div className="container-fluid app-body" style={{ paddingTop:'10px' }}>
 						<div className="row">
-							<ChatRoom roomName="roomOne" socket={this.socket} user={this.props.user} />
+							<ChatRoom roomName="roomOne" socket={this.socket} title="All" user={this.props.user} />
 							<ChatWith userList={this.state.userList} myself={this.props.user} newChat={this.newChat}/>
 						</div>
 						<div className="row" ref="newChat">
