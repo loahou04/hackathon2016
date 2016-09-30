@@ -23,4 +23,8 @@ var user = getParameterByName('user');
 // 	socket.emit('subscribe', 'roomOne');
 // }
 
-ReactDOM.render(<Chat user={user}/>, document.getElementById('app'));
+if(user && user.length > 0 && user !== '<Pick') {
+	ReactDOM.render(<Chat user={user}/>, document.getElementById('app'));
+} else {
+	alert("change the user query parameter to your name");
+}

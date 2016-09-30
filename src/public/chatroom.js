@@ -56,7 +56,7 @@ class ChatRoom extends React.Component {
 					<CardText>
 						{chatText}
 					</CardText>
-					<div>
+					<div style={{paddingLeft: '10px'}}>
 						<TextField name="messageText" ref="messageField" onKeyDown={(ev) => {this.keyDown(ev)}}/>
 						<FlatButton onClick={() => { this.sendMessage() }} label="Send" />
 					</div>
