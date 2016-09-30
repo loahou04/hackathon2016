@@ -14,7 +14,8 @@ class ChatApp extends React.Component {
 		// this.socket = io('http://localhost:3000', {query:`user=${this.props.user}`});
 		this.state = {
 			userList : [],
-			roomList: []
+			roomList: [],
+			roomNames: []
 		};
 
 		this.socket.on('users', (users) => {
@@ -25,16 +26,21 @@ class ChatApp extends React.Component {
 		});
 
 		this.socket.on('newChat', (chatRoomObj) => {
-			// this.refs.newChat.appendChild(
-			// 	<ChatRoom roomName={chatRoom} socket={this.socket} user={this.props.user} />
-			// );
+			
 			console.log(chatRoomObj);
 			let roomTitle = `Chat between ${chatRoomObj.users[0]} and ${chatRoomObj.users[1]}`;
-			this.setState({
-				roomList : this.state.roomList.concat([
-					<ChatRoom key={Math.random()} roomName={chatRoomObj.room} title={roomTitle} socket={this.socket} user={this.props.user} />
-				])
+			let roomExists = this.state.roomNames.filter((name) => {
+				return roomTitle === name;
 			});
+			if(roomExists.length === 0) {
+				this.setState({
+					roomList : this.state.roomList.concat([
+						<ChatRoom key={Math.random()} roomName={chatRoomObj.room} title={roomTitle} socket={this.socket} user={this.props.user} />
+					]),
+					roomNames: this.state.roomNames.concat([roomTitle])
+				});
+			}
+
 		});
 
 		this.newChat = this.newChat.bind(this);

@@ -71,22 +71,23 @@ io.on('connection', function(socket){
 
 	socket.on('privatechat', function(users) {
 		var roomExists = roomAlreadyExists(privateRooms, users);
+		var chatParticipants = allClients.filter((obj) => {
+			return obj.user === users[0] || obj.user === users[1];
+		});
 		if(!roomExists) {
-			var chatParticipants = allClients.filter((obj) => {
-				return obj.user === users[0] || obj.user === users[1];
-			});
 			var newRoom = Math.random();
 			var privateRoomObject = {
 				users: users,
 				room: newRoom
 			};
-			chatParticipants.forEach((client) => {
-				client.socket.emit('newChat', privateRoomObject);
-			});
+			
 			privateRooms.push(privateRoomObject);
-		} else {
-			console.log('room already exists');
-		}
+			roomExists = privateRoomObject;
+		} 
+
+		chatParticipants.forEach((client) => {
+			client.socket.emit('newChat', roomExists);
+		});
 		
 	});
   
