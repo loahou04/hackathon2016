@@ -23,6 +23,12 @@ class ChatRoom extends React.Component {
 		});
 	}
 
+	keyDown(ev) {
+		if(ev.keyCode === 13) {
+			this.sendMessage();
+		}
+	}
+
 	sendMessage() {
 		if(this.refs.messageField.getValue().length > 0) {
 			this.props.socket.emit('send', {
@@ -51,7 +57,7 @@ class ChatRoom extends React.Component {
 						{chatText}
 					</CardText>
 					<div>
-						<TextField name="messageText" ref="messageField" />
+						<TextField name="messageText" ref="messageField" onKeyDown={(ev) => {this.keyDown(ev)}}/>
 						<FlatButton onClick={() => { this.sendMessage() }} label="Send" />
 					</div>
 				</Card>
